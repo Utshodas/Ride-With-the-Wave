@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +15,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
 import model.WaveButton;
+import model.WaveSubScene;
 
 public class ViewManager {
 
@@ -23,10 +26,11 @@ public class ViewManager {
 	private Scene mainScene;
 	private Stage mainStage;
 	
-	private final static int MENU_BUTTON_START_X = 300;
+	private final static int MENU_BUTTON_START_X = 100;
 	private final static int MENU_BUTTON_START_Y =100;
 	
 	List <WaveButton> menuButtons;
+	private WaveSubScene aboutSubScene;
 	
 	public ViewManager()
 	{
@@ -35,12 +39,19 @@ public class ViewManager {
 		mainStage = new Stage();
 		mainStage.setScene(mainScene);
 		menuButtons = new ArrayList<>();
-		createMenuButton("PLAY!");
-		createMenuButton("Scores");
-		createMenuButton("About");
-		createMenuButton("Exit");
+		createPlayMenuButton();
+		createScoresMenuButton();
+		createAboutMenuButton();
+		createExitMenuButton();
+		aboutSubScenes();
 		
 		createBackground();
+		
+	}
+	private void aboutSubScenes()
+	{
+		aboutSubScene = new WaveSubScene();	
+		mainPane.getChildren().add(aboutSubScene);
 	}
 	
 	private void createBackground() {
@@ -63,12 +74,47 @@ public class ViewManager {
 		
 		
 	}
-	private void  createMenuButton(String text) {
+	private void  createPlayMenuButton() {
 		
-		WaveButton button = new WaveButton(text);
-		addMenuButton(button);
+		WaveButton playButton = new WaveButton("PLAY!");
+		addMenuButton(playButton);
 		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         Background background = new Background(backgroundImage);
-        button.setBackground(background);
+        playButton.setBackground(background);
+	}
+	private void  createScoresMenuButton() {
+		
+		WaveButton scoresButton = new WaveButton("Scores");
+		addMenuButton(scoresButton);
+		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
+        Background background = new Background(backgroundImage);
+        scoresButton.setBackground(background);
+	}
+	private void  createAboutMenuButton() {
+		
+		WaveButton aboutButton = new WaveButton("About");
+		addMenuButton(aboutButton);
+		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
+        Background background = new Background(backgroundImage);
+        aboutButton.setBackground(background);
+        
+        aboutButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				aboutSubScene.moveSubScene();
+			}
+        	
+        });
+        
+        
+	}
+	private void  createExitMenuButton() {
+		
+		WaveButton exitButton = new WaveButton("Exit");
+		addMenuButton(exitButton);
+		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
+        Background background = new Background(backgroundImage);
+        exitButton.setBackground(background);
 	}
 }
