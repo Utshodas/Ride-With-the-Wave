@@ -31,6 +31,10 @@ public class ViewManager {
 	
 	List <WaveButton> menuButtons;
 	private WaveSubScene aboutSubScene;
+	private WaveSubScene playSubScene;
+	private WaveSubScene scoresSubScene;
+	private WaveSubScene sceneToHide;
+	
 	
 	public ViewManager()
 	{
@@ -43,15 +47,36 @@ public class ViewManager {
 		createScoresMenuButton();
 		createAboutMenuButton();
 		createExitMenuButton();
-		aboutSubScenes();
+		createSubScenes();
 		
 		createBackground();
 		
 	}
-	private void aboutSubScenes()
+	
+	private void showSubScene( WaveSubScene subScene)
+	{
+		if (sceneToHide != null) {
+			sceneToHide.moveSubScene();
+		}
+		
+		else
+			{ subScene.moveSubScene();
+		      sceneToHide = subScene;
+			}
+	}
+	
+	private void createSubScenes()
 	{
 		aboutSubScene = new WaveSubScene();	
 		mainPane.getChildren().add(aboutSubScene);
+		
+		scoresSubScene = new WaveSubScene();	
+		mainPane.getChildren().add(scoresSubScene);
+		
+		playSubScene = new WaveSubScene();	
+		mainPane.getChildren().add(playSubScene);
+		
+		
 	}
 	
 	private void createBackground() {
@@ -81,6 +106,15 @@ public class ViewManager {
 		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         Background background = new Background(backgroundImage);
         playButton.setBackground(background);
+        
+        playButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				showSubScene(playSubScene);
+			}
+        	
+        });
 	}
 	private void  createScoresMenuButton() {
 		
@@ -89,6 +123,15 @@ public class ViewManager {
 		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         Background background = new Background(backgroundImage);
         scoresButton.setBackground(background);
+        
+        scoresButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				showSubScene(scoresSubScene);
+			}
+        	
+        });
 	}
 	private void  createAboutMenuButton() {
 		
@@ -102,7 +145,7 @@ public class ViewManager {
 
 			@Override
 			public void handle(ActionEvent event) {
-				aboutSubScene.moveSubScene();
+				showSubScene(aboutSubScene);
 			}
         	
         });
@@ -116,5 +159,14 @@ public class ViewManager {
 		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         Background background = new Background(backgroundImage);
         exitButton.setBackground(background);
+        
+        exitButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				mainStage.close();
+			}
+        	
+        });
 	}
 }

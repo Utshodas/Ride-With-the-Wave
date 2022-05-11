@@ -42,7 +42,7 @@ public class WaveSubScene extends SubScene {
 			transition.setToX(-676);
 			isHidden=false;
 		}
-		else 
+		else if(isHidden==false)
 		{
 			transition.setToX(0);
 			isHidden=true;
