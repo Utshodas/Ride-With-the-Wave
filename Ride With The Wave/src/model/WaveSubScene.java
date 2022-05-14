@@ -29,7 +29,7 @@ public class WaveSubScene extends SubScene {
 		
 		isHidden =true;
 		
-		setLayoutX(1024);
+		setLayoutX(1124);
 		setLayoutY(180);
 	}
 	

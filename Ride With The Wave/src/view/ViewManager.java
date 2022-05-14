@@ -20,8 +20,8 @@ import model.WaveSubScene;
 public class ViewManager {
 
 	
-	public static final int HEIGHT = 600;
-	public static final int WIDTH = 800;
+	public static final int HEIGHT = 603;
+	public static final int WIDTH = 1071;
 	private AnchorPane mainPane;
 	private Scene mainScene;
 	private Stage mainStage;
@@ -111,7 +111,8 @@ public class ViewManager {
 
 			@Override
 			public void handle(ActionEvent event) {
-				showSubScene(playSubScene);
+				GameViewManager gameManager = new GameViewManager();
+				gameManager.createNewGame(mainStage);
 			}
         	
         });
