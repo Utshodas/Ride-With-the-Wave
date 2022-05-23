@@ -14,6 +14,8 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
+import model.BigInfoLabel;
+import model.HugeInfoLabel;
 import model.WaveButton;
 import model.WaveSubScene;
 
@@ -30,7 +32,7 @@ public class ViewManager {
 	private final static int MENU_BUTTON_START_Y =100;
 	
 	List <WaveButton> menuButtons;
-	private WaveSubScene aboutSubScene;
+	private WaveSubScene helpSubScene;
 	private WaveSubScene playSubScene;
 	private WaveSubScene scoresSubScene;
 	private WaveSubScene sceneToHide;
@@ -45,7 +47,7 @@ public class ViewManager {
 		menuButtons = new ArrayList<>();
 		createPlayMenuButton();
 		createScoresMenuButton();
-		createAboutMenuButton();
+		createHelpMenuButton();
 		createExitMenuButton();
 		createSubScenes();
 		
@@ -67,8 +69,12 @@ public class ViewManager {
 	
 	private void createSubScenes()
 	{
-		aboutSubScene = new WaveSubScene();	
-		mainPane.getChildren().add(aboutSubScene);
+		helpSubScene = new WaveSubScene();	
+		mainPane.getChildren().add(helpSubScene);
+		HugeInfoLabel helpInfo = new HugeInfoLabel("Press Up arrow and Down arrow to move the character. "
+        		+ "Going on reverse flow will end the Game and Neutral wave will decrease your life. At a time"
+        		+ "there will be all three types of wave infront of you");
+		helpSubScene.getPane().getChildren().add(helpInfo);
 		
 		scoresSubScene = new WaveSubScene();	
 		mainPane.getChildren().add(scoresSubScene);
@@ -125,6 +131,8 @@ public class ViewManager {
         Background background = new Background(backgroundImage);
         scoresButton.setBackground(background);
         
+        
+        
         scoresButton.setOnAction( new EventHandler<ActionEvent>() {
 
 			@Override
@@ -134,19 +142,19 @@ public class ViewManager {
         	
         });
 	}
-	private void  createAboutMenuButton() {
+	private void  createHelpMenuButton() {
 		
-		WaveButton aboutButton = new WaveButton("About");
-		addMenuButton(aboutButton);
+		WaveButton helpButton = new WaveButton("Help");
+		addMenuButton(helpButton);
 		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         Background background = new Background(backgroundImage);
-        aboutButton.setBackground(background);
+        helpButton.setBackground(background);
         
-        aboutButton.setOnAction( new EventHandler<ActionEvent>() {
+        helpButton.setOnAction( new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				showSubScene(aboutSubScene);
+				showSubScene(helpSubScene);
 			}
         	
         });

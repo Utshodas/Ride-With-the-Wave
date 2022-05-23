@@ -15,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import model.InfoLabel;
+import model.WaveSubScene;
 
 public class GameViewManager {
 	
@@ -42,6 +44,8 @@ public class GameViewManager {
 	
 	private boolean isDownKeyPressed;
 	private boolean isUpKeyPressed;
+	private boolean isRightKeyPressed;
+	private boolean isLeftKeyPressed;
 	private int angle; //will add some rotating animation later
 	private AnimationTimer gameTimer;
 	
@@ -49,6 +53,11 @@ public class GameViewManager {
 	List<ImageView> forwave2;
 	List<ImageView> forwave3;
 
+	
+	private InfoLabel pointsLabel;
+	private int points=0;
+	private int neutralPixel=0;
+	
 	public GameViewManager() {
 		initializeStage();
 		forwave1 = new ArrayList<>();
@@ -72,7 +81,14 @@ public class GameViewManager {
 				{
 					isDownKeyPressed=true;
 				}
-				
+				if(event.getCode()==KeyCode.RIGHT)
+				{
+					isRightKeyPressed=true;
+					
+				}else if (event.getCode()==KeyCode.LEFT)
+				{
+					isLeftKeyPressed=true;
+				}
 				
 			}
 			
@@ -93,15 +109,22 @@ public class GameViewManager {
 		this.menuStage = menuStage;
 		this.menuStage.hide();
 		addBackgounds();
+		createGameElements();
 		createBoy();
 		gameLoop();
 		gameStage.show();
 	}
+	private void createGameElements() {
+		pointsLabel = new InfoLabel("POINTS : " + points);
+		pointsLabel.setLayoutX(600);
+		pointsLabel.setLayoutY(20);
+		gamePane.getChildren().add(pointsLabel);
+	}
 	
 	private void createBoy() {
-		boy = new ImageView(new Image(getClass().getResourceAsStream("sufer_boy_small.png")));
+		boy = new ImageView(new Image(getClass().getResourceAsStream("surfer_boy2.png")));
 		boy.setLayoutX(10);
-		boy.setLayoutY(50);
+		boy.setLayoutY(0);
 		gamePane.getChildren().add(boy);
 		}
 	
@@ -114,26 +137,59 @@ public class GameViewManager {
 				// TODO Auto-generated method stub
 				moveBackground();
 				moveBoy();
+				//deathLogic();
 			}
 		};
 		gameTimer.start();
 	}
 	
+  private void deathLogic() {
+	
+	if((boy.getLayoutY()== reverseWave1.getLayoutY()||boy.getLayoutY()== reverseWave2.getLayoutY()||boy.getLayoutY()== reverseWave3.getLayoutY()) &&
+			( reverseWave1.getLayoutX()<201 || reverseWave2.getLayoutX()<201 || reverseWave3.getLayoutX()<201)
+			&& ( reverseWave1.getLayoutX()>0 || reverseWave2.getLayoutX()>0 || reverseWave3.getLayoutX()>0)) {
+		gameTimer.stop();
+		DeathViewManager  deathManager = new DeathViewManager();
+		deathManager.deathScene(gameStage,points,menuStage,"reverse");
+	}
+  }
+		
+	
+	
 	private void moveBoy() {
 		if(isDownKeyPressed && !isUpKeyPressed)
 		{
-			if(boy.getLayoutY()<450) {
-				boy.setLayoutY(boy.getLayoutY()+200);
+			if(boy.getLayoutY()<402) {
+				boy.setLayoutY(boy.getLayoutY()+201);
+				//neutralPixel=0;
 			}
 			isDownKeyPressed=false;
 			
 		}
 		if(!isDownKeyPressed && isUpKeyPressed)
 		{
-			if(boy.getLayoutY()>50) {
-				boy.setLayoutY(boy.getLayoutY()-200);
+			if(boy.getLayoutY()>0) {
+				boy.setLayoutY(boy.getLayoutY()-201);
+				//neutralPixel=0;
 			}
 			isUpKeyPressed=false;
+		}
+		if(isRightKeyPressed && !isLeftKeyPressed)
+		{
+			if(boy.getLayoutX()<871) {
+				boy.setLayoutX(boy.getLayoutX()+20);
+				//neutralPixel=0;
+			}
+			isRightKeyPressed=false;
+			
+		}
+		if(!isRightKeyPressed && isLeftKeyPressed)
+		{
+			if(boy.getLayoutX()>0){
+				boy.setLayoutX(boy.getLayoutX()-20);
+				neutralPixel=0;
+			}
+			isLeftKeyPressed=false;
 		}
 		
 	}
@@ -149,25 +205,23 @@ public class GameViewManager {
 		reverseWave3= new ImageView(new Image(getClass().getResourceAsStream("reverse_wave1.png")));
 		neutralWave3= new ImageView(new Image(getClass().getResourceAsStream("neutral_wave1.png")));
 		gamePane.getChildren().add(forwardWave1);
-		gamePane.getChildren().add(reverseWave1);
 		gamePane.getChildren().add(neutralWave1);
+		gamePane.getChildren().add(reverseWave1);
 		gamePane.getChildren().add(forwardWave2);
-		gamePane.getChildren().add(reverseWave2);
 		gamePane.getChildren().add(neutralWave2);
+		gamePane.getChildren().add(reverseWave2);
 		gamePane.getChildren().add(forwardWave3);
 		gamePane.getChildren().add(reverseWave3);
 		gamePane.getChildren().add(neutralWave3);
+		forwave1.add(forwardWave1);
 		forwave1.add(neutralWave1);
 		forwave1.add(reverseWave1);
-		forwave1.add(forwardWave1);
+		forwave2.add(forwardWave2);
 		forwave2.add(neutralWave2);
 		forwave2.add(reverseWave2);
-		forwave2.add(forwardWave2);
 		forwave3.add(neutralWave3);
 		forwave3.add(reverseWave3);
 		forwave3.add(forwardWave3);
-		Collections.shuffle(forwave1);
-		Collections.shuffle(forwave2);
 		Collections.shuffle(forwave3);
 		
 		setBackgroundPosition();
@@ -197,11 +251,11 @@ public class GameViewManager {
 	
 	private void setPositionLater(List<ImageView> waves) {
 		Collections.shuffle(waves);
-		waves.get(0).setLayoutX(1071);
+		waves.get(0).setLayoutX(1068);
 		waves.get(0).setLayoutY(0);
-		waves.get(1).setLayoutX(1071);
+		waves.get(1).setLayoutX(1068);
 		waves.get(1).setLayoutY(201);
-		waves.get(2).setLayoutX(1071);
+		waves.get(2).setLayoutX(1068);
 		waves.get(2).setLayoutY(402);
 		
 	}
@@ -209,15 +263,17 @@ public class GameViewManager {
 		
 	private void moveBackground() {
 
-		forwave1.get(0).setLayoutX(forwave1.get(0).getLayoutX()-1);
-		forwave1.get(1).setLayoutX(forwave1.get(1).getLayoutX()-1);
-		forwave1.get(2).setLayoutX(forwave1.get(2).getLayoutX()-1);
-		forwave2.get(0).setLayoutX(forwave2.get(0).getLayoutX()-1);
-		forwave2.get(1).setLayoutX(forwave2.get(1).getLayoutX()-1);
-		forwave2.get(2).setLayoutX(forwave2.get(2).getLayoutX()-1);
-		forwave3.get(0).setLayoutX(forwave3.get(0).getLayoutX()-1);
-		forwave3.get(1).setLayoutX(forwave3.get(1).getLayoutX()-1);
-		forwave3.get(2).setLayoutX(forwave3.get(2).getLayoutX()-1);
+		forwave1.get(0).setLayoutX(forwave1.get(0).getLayoutX()-4);
+		forwave1.get(1).setLayoutX(forwave1.get(1).getLayoutX()-4);
+		forwave1.get(2).setLayoutX(forwave1.get(2).getLayoutX()-4);
+		forwave2.get(0).setLayoutX(forwave2.get(0).getLayoutX()-4);
+		forwave2.get(1).setLayoutX(forwave2.get(1).getLayoutX()-4);
+		forwave2.get(2).setLayoutX(forwave2.get(2).getLayoutX()-4);
+		forwave3.get(0).setLayoutX(forwave3.get(0).getLayoutX()-4);
+		forwave3.get(1).setLayoutX(forwave3.get(1).getLayoutX()-4);
+		forwave3.get(2).setLayoutX(forwave3.get(2).getLayoutX()-4);
+		points = points + 4;
+		pointsLabel.setText("POINTS : "+ points);
 		
 		if(forwave1.get(0).getLayoutX()<-536) {
 			setPositionLater(forwave1);	
