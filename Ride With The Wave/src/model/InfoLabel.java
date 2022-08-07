@@ -24,7 +24,7 @@ public class InfoLabel extends Label {
 		setPrefWidth(130);
 		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("info_label.png").toExternalForm(),130,20,false,true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         setBackground(new Background(backgroundImage));
-        setAlignment(Pos.CENTER_LEFT);
+        setAlignment(Pos.CENTER);
         //setPadding(new Insets(2,2,2,2));
         setText(text);
         setLabelFont();

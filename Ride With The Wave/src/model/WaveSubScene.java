@@ -25,10 +25,10 @@ public class WaveSubScene extends SubScene {
 		setLayoutX(1124);
 		setLayoutY(180);
 	}
-	public void moveSubScene(WaveSubScene subScene)
+	public void moveSubScene()
 	{
 		TranslateTransition transition = new TranslateTransition();
-		transition.setDuration(Duration.seconds(0.3));
+		transition.setDuration(Duration.seconds(0.2));
 		transition.setNode(this);
 		if(isHidden==true) {
 			transition.setToX(-676);
@@ -36,7 +36,7 @@ public class WaveSubScene extends SubScene {
 		}
 		else if(isHidden==false)
 		{
-			transition.setToX(0);
+			transition.setToX(1124);
 			isHidden=true;
 		}
 		transition.play();

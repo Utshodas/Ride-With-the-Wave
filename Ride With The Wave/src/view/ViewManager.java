@@ -8,6 +8,7 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -17,6 +18,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.BigInfoLabel;
+import model.DifficultyWaveSubScene;
 import model.HugeInfoLabel;
 import model.InfoLabel;
 import model.WaveButton;
@@ -58,17 +60,12 @@ public class ViewManager {
 		
 	}
 	
-	private void showSubScene( WaveSubScene newSubScene)
-	{
-		if (sceneToHide!=null) {
-			sceneToHide.moveSubScene(sceneToHide);
-		}
-		
-		else
-			{ 
-			sceneToHide = newSubScene;
-			sceneToHide.moveSubScene(sceneToHide);
-			}
+	private void showSubScene(WaveSubScene subScene) {
+		if (sceneToHide != null) {
+			sceneToHide.moveSubScene();
+		}	
+			subScene.moveSubScene();
+			sceneToHide = subScene;
 	}
 	private void createSubScenes()
 	{
@@ -82,9 +79,9 @@ public class ViewManager {
 	{
 		helpSubScene = new WaveSubScene();	
 		mainPane.getChildren().add(helpSubScene);
-		BigInfoLabel helpInfo = new BigInfoLabel("Press Up arrow and Down arrow to move the character. "
-        		+ "Going on reverse flow will end the Game and Neutral wave will decrease your life. At a time"
-        		+ "there will be all three types of wave infront of you");
+		BigInfoLabel helpInfo = new BigInfoLabel("Press Up arrow and Down arrow to\nmove  the character."
+        		+ "Going on reverse\nflow will end the Game and Neutral\nwave will decrease your life. At a time\n"
+        		+ "there will be all three types of wave\ninfront of you");
 		helpSubScene.getPane().getChildren().add(helpInfo);
 	}
 	private void createScoresSubScene()
@@ -109,6 +106,7 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent event) {
 				GameViewManager.speed=2;
+				GameViewManager.neutralPixel=500;
 			}	
         });
 		WaveButton normalButton = new WaveButton("NORMAL");
@@ -118,7 +116,8 @@ public class ViewManager {
 
 			@Override
 			public void handle(ActionEvent event) {
-				GameViewManager.speed=5;
+				GameViewManager.speed=4;
+				GameViewManager.neutralPixel=300;
 			}	
         });
 		WaveButton hardButton = new WaveButton("HARD");
@@ -129,6 +128,7 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent event) {
 				GameViewManager.speed=10;
+				GameViewManager.neutralPixel=100;
 			}	
         });
 		levelSubScene.getPane().getChildren().add(easyButton);

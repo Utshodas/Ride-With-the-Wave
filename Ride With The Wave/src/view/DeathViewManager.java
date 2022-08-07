@@ -43,8 +43,8 @@ public class DeathViewManager {
 		BackgroundImage backgroundImage1 = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
         Background background1 = new Background(backgroundImage1);
         deathPane.setBackground(background1);
-		BigInfoLabel finalPoint = new  BigInfoLabel("Your Point is "+ point);
-		finalPoint.setLayoutX(250);
+		InfoLabel finalPoint = new  InfoLabel("Your Point is "+ point);
+		finalPoint.setLayoutX(350);
 		finalPoint.setLayoutY(100);
 		deathPane.getChildren().add(finalPoint);
 		
@@ -61,7 +61,7 @@ public class DeathViewManager {
 
 			@Override
 			public void handle(ActionEvent event) {
-				deathStage.close();
+				deathStage.hide();
 				menuStage.show();
 			}
         	
