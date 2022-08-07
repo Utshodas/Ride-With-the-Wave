@@ -12,28 +12,20 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.util.Duration;
 
 public class WaveSubScene extends SubScene {
-
-	private final String FONT_PATH = "src/model/resources/kenney_pixel.ttf";
-	
-	private boolean isHidden;
-	
+	private boolean isHidden=true;
 	public WaveSubScene() {
 		super( new AnchorPane(),400,400);
 		prefHeight(400);
 		prefWidth(400);
-		Image backgroundImage = new Image(getClass().getResource("white_panel.jpg").toExternalForm(), 256, 256, false, true);
+		Image backgroundImage = new Image(getClass().getResource("yellow_panel.png").toExternalForm(), 256, 256, false, true);
 		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
 		
 		AnchorPane root2 = (AnchorPane) this.getRoot();
 		root2.setBackground(new Background(background));
-		
-		isHidden =true;
-		
 		setLayoutX(1124);
 		setLayoutY(180);
 	}
-	
-	public void moveSubScene()
+	public void moveSubScene(WaveSubScene subScene)
 	{
 		TranslateTransition transition = new TranslateTransition();
 		transition.setDuration(Duration.seconds(0.3));

@@ -20,6 +20,7 @@ import model.WaveSubScene;
 
 public class GameViewManager {
 	
+	public static int speed=4;
 	private Stage gameStage;
 	private AnchorPane gamePane;
 	private Scene gameScene;
@@ -136,8 +137,8 @@ public class GameViewManager {
 			public void handle(long arg0) {
 				// TODO Auto-generated method stub
 				moveBackground();
+				deathLogic();
 				moveBoy();
-				//deathLogic();
 			}
 		};
 		gameTimer.start();
@@ -145,7 +146,7 @@ public class GameViewManager {
 	
   private void deathLogic() {
 	
-	if((boy.getLayoutY()== reverseWave1.getLayoutY()||boy.getLayoutY()== reverseWave2.getLayoutY()||boy.getLayoutY()== reverseWave3.getLayoutY()) &&
+	if((boy.getLayoutY()==reverseWave1.getLayoutY()||boy.getLayoutY()==reverseWave2.getLayoutY()||boy.getLayoutY()==reverseWave3.getLayoutY()) &&
 			( reverseWave1.getLayoutX()<201 || reverseWave2.getLayoutX()<201 || reverseWave3.getLayoutX()<201)
 			&& ( reverseWave1.getLayoutX()>0 || reverseWave2.getLayoutX()>0 || reverseWave3.getLayoutX()>0)) {
 		gameTimer.stop();
@@ -176,7 +177,7 @@ public class GameViewManager {
 		}
 		if(isRightKeyPressed && !isLeftKeyPressed)
 		{
-			if(boy.getLayoutX()<871) {
+			if(boy.getLayoutX()<201) {
 				boy.setLayoutX(boy.getLayoutX()+20);
 				//neutralPixel=0;
 			}
@@ -263,15 +264,15 @@ public class GameViewManager {
 		
 	private void moveBackground() {
 
-		forwave1.get(0).setLayoutX(forwave1.get(0).getLayoutX()-4);
-		forwave1.get(1).setLayoutX(forwave1.get(1).getLayoutX()-4);
-		forwave1.get(2).setLayoutX(forwave1.get(2).getLayoutX()-4);
-		forwave2.get(0).setLayoutX(forwave2.get(0).getLayoutX()-4);
-		forwave2.get(1).setLayoutX(forwave2.get(1).getLayoutX()-4);
-		forwave2.get(2).setLayoutX(forwave2.get(2).getLayoutX()-4);
-		forwave3.get(0).setLayoutX(forwave3.get(0).getLayoutX()-4);
-		forwave3.get(1).setLayoutX(forwave3.get(1).getLayoutX()-4);
-		forwave3.get(2).setLayoutX(forwave3.get(2).getLayoutX()-4);
+		forwave1.get(0).setLayoutX(forwave1.get(0).getLayoutX()-speed);
+		forwave1.get(1).setLayoutX(forwave1.get(1).getLayoutX()-speed);
+		forwave1.get(2).setLayoutX(forwave1.get(2).getLayoutX()-speed);
+		forwave2.get(0).setLayoutX(forwave2.get(0).getLayoutX()-speed);
+		forwave2.get(1).setLayoutX(forwave2.get(1).getLayoutX()-speed);
+		forwave2.get(2).setLayoutX(forwave2.get(2).getLayoutX()-speed);
+		forwave3.get(0).setLayoutX(forwave3.get(0).getLayoutX()-speed);
+		forwave3.get(1).setLayoutX(forwave3.get(1).getLayoutX()-speed);
+		forwave3.get(2).setLayoutX(forwave3.get(2).getLayoutX()-speed);
 		points = points + 4;
 		pointsLabel.setText("POINTS : "+ points);
 		
@@ -283,10 +284,7 @@ public class GameViewManager {
 		}
 		if(forwave3.get(0).getLayoutX()<-536) {
 			setPositionLater(forwave3);	
-		}
-		
-			
-		
+		}			
 	}
 	
 

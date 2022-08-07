@@ -37,8 +37,12 @@ public class DeathViewManager {
 	
 	public void deathScene(Stage gameStage, int point,Stage  menuStage, String text){
 		this.gameStage = gameStage;
-		this.gameStage.close();
+		gameStage.hide();
 		deathStage.show();
+		this.menuStage=menuStage;
+		BackgroundImage backgroundImage1 = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
+        Background background1 = new Background(backgroundImage1);
+        deathPane.setBackground(background1);
 		BigInfoLabel finalPoint = new  BigInfoLabel("Your Point is "+ point);
 		finalPoint.setLayoutX(250);
 		finalPoint.setLayoutY(100);
@@ -59,8 +63,6 @@ public class DeathViewManager {
 			public void handle(ActionEvent event) {
 				deathStage.close();
 				menuStage.show();
-				
-				
 			}
         	
         });

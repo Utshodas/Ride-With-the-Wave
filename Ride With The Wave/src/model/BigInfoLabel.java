@@ -20,12 +20,12 @@ public class BigInfoLabel extends Label {
 	
 	public BigInfoLabel( String text)
 	{
-		setPrefHeight(70);
-		setPrefWidth(300);
-		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("yellow_button01.png").toExternalForm(),300,70,false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
+		setPrefHeight(50);
+		setPrefWidth(400);
+		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm(),130,20,false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
         setBackground(new Background(backgroundImage));
         setAlignment(Pos.CENTER_LEFT);
-        setPadding(new Insets(10,10,10,10));
+        //setPadding(new Insets(2,2,2,2));
         setText(text);
         setLabelFont();
         
@@ -36,7 +36,7 @@ public class BigInfoLabel extends Label {
 			setFont(Font.loadFont( new FileInputStream(new File(FONT_PATH)),15));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			setFont(Font.font("AvantGarde",15));
+			//setFont(Font.font("AvantGarde",15));
 		}
 	}
 

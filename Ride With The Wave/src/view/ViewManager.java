@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,8 +15,10 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.BigInfoLabel;
 import model.HugeInfoLabel;
+import model.InfoLabel;
 import model.WaveButton;
 import model.WaveSubScene;
 
@@ -33,10 +36,10 @@ public class ViewManager {
 	
 	List <WaveButton> menuButtons;
 	private WaveSubScene helpSubScene;
-	private WaveSubScene playSubScene;
+	//private WaveSubScene playSubScene;
 	private WaveSubScene scoresSubScene;
+	private WaveSubScene levelSubScene;
 	private WaveSubScene sceneToHide;
-	
 	
 	public ViewManager()
 	{
@@ -47,49 +50,97 @@ public class ViewManager {
 		menuButtons = new ArrayList<>();
 		createPlayMenuButton();
 		createScoresMenuButton();
+		createLevelMenuButton();
 		createHelpMenuButton();
 		createExitMenuButton();
 		createSubScenes();
-		
 		createBackground();
 		
 	}
 	
-	private void showSubScene( WaveSubScene subScene)
+	private void showSubScene( WaveSubScene newSubScene)
 	{
-		if (sceneToHide != null) {
-			sceneToHide.moveSubScene();
+		if (sceneToHide!=null) {
+			sceneToHide.moveSubScene(sceneToHide);
 		}
 		
 		else
-			{ subScene.moveSubScene();
-		      sceneToHide = subScene;
+			{ 
+			sceneToHide = newSubScene;
+			sceneToHide.moveSubScene(sceneToHide);
 			}
 	}
-	
 	private void createSubScenes()
+	{
+		createHelpSubScene();
+		createScoresSubScene();
+		createLevelSubScene();
+		//createplaySubScene();
+		
+	}
+	private void createHelpSubScene()
 	{
 		helpSubScene = new WaveSubScene();	
 		mainPane.getChildren().add(helpSubScene);
-		HugeInfoLabel helpInfo = new HugeInfoLabel("Press Up arrow and Down arrow to move the character. "
+		BigInfoLabel helpInfo = new BigInfoLabel("Press Up arrow and Down arrow to move the character. "
         		+ "Going on reverse flow will end the Game and Neutral wave will decrease your life. At a time"
         		+ "there will be all three types of wave infront of you");
 		helpSubScene.getPane().getChildren().add(helpInfo);
-		
+	}
+	private void createScoresSubScene()
+	{
 		scoresSubScene = new WaveSubScene();	
 		mainPane.getChildren().add(scoresSubScene);
-		
+	}
+	/*private void createplaySubScene()
+	{
 		playSubScene = new WaveSubScene();	
 		mainPane.getChildren().add(playSubScene);
+	}*/
+	private void createLevelSubScene()
+	{
+		levelSubScene = new WaveSubScene();	
+		mainPane.getChildren().add(levelSubScene);
+		WaveButton easyButton = new WaveButton("EASY");
+		easyButton.setLayoutX(100);
+		easyButton.setLayoutY(100);
+		easyButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				GameViewManager.speed=2;
+			}	
+        });
+		WaveButton normalButton = new WaveButton("NORMAL");
+		normalButton.setLayoutX(100);
+		normalButton.setLayoutY(200);
+		normalButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				GameViewManager.speed=5;
+			}	
+        });
+		WaveButton hardButton = new WaveButton("HARD");
+		hardButton.setLayoutX(100);
+		hardButton.setLayoutY(300);
+		hardButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				GameViewManager.speed=10;
+			}	
+        });
+		levelSubScene.getPane().getChildren().add(easyButton);
+		levelSubScene.getPane().getChildren().add(normalButton);
+		levelSubScene.getPane().getChildren().add(hardButton);
 		
 		
 	}
-	
 	private void createBackground() {
 		Image backgroundImage = new Image(getClass().getResource("blue_panel.jpg").toExternalForm(), 256, 256, false, true);
 		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));
-		
 	}
 
 	public Stage getMainStage()
@@ -119,8 +170,7 @@ public class ViewManager {
 			public void handle(ActionEvent event) {
 				GameViewManager gameManager = new GameViewManager();
 				gameManager.createNewGame(mainStage);
-			}
-        	
+			}	
         });
 	}
 	private void  createScoresMenuButton() {
@@ -138,6 +188,25 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent event) {
 				showSubScene(scoresSubScene);
+			}
+        	
+        });
+	}
+	private void  createLevelMenuButton() {
+		
+		WaveButton levelButton = new WaveButton("Difficulty");
+		addMenuButton(levelButton);
+		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("red_button.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
+        Background background = new Background(backgroundImage);
+        levelButton.setBackground(background);
+        
+        
+        
+        levelButton.setOnAction( new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				showSubScene(levelSubScene);
 			}
         	
         });
