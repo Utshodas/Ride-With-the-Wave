@@ -21,7 +21,7 @@ import model.WaveSubScene;
 public class GameViewManager {
 	
 	public static int speed=4;
-	static int neutralPixel=300;
+	static int neutralPixel=1000;
 	private Stage gameStage;
 	private AnchorPane gamePane;
 	private Scene gameScene;
@@ -152,9 +152,9 @@ public class GameViewManager {
 	
   private void deathLogicReverse() {
 	
-	if((boy.getLayoutY()==reverseWave1.getLayoutY()||boy.getLayoutY()==reverseWave2.getLayoutY()||boy.getLayoutY()==reverseWave3.getLayoutY()) &&
-			( reverseWave1.getLayoutX()<201 || reverseWave2.getLayoutX()<201 || reverseWave3.getLayoutX()<201)
-			&& ( reverseWave1.getLayoutX()>0 || reverseWave2.getLayoutX()>0 || reverseWave3.getLayoutX()>0)) {
+	  if((boy.getLayoutY()==reverseWave1.getLayoutY() && reverseWave1.getLayoutX()>0 && neutralWave1.getLayoutX()<201) ||
+		(boy.getLayoutY()==reverseWave2.getLayoutY() && reverseWave2.getLayoutX()>0 && reverseWave2.getLayoutX()<201) ||
+		(boy.getLayoutY()==reverseWave3.getLayoutY() && reverseWave3.getLayoutX()>0 && reverseWave3.getLayoutX()<201)) {
 		gameTimer.stop();
 		DeathViewManager  deathManager = new DeathViewManager();
 		deathManager.deathScene(gameStage,points,menuStage,"reverse");
@@ -162,17 +162,18 @@ public class GameViewManager {
   }
   private void deathLogicNeautral() {
 		
-		if((boy.getLayoutY()== neutralWave1.getLayoutY()||boy.getLayoutY()==neutralWave2.getLayoutY()||boy.getLayoutY()==neutralWave3.getLayoutY()) &&
-				( neutralWave1.getLayoutX()<201 || neutralWave2.getLayoutX()<201 || neutralWave3.getLayoutX()<201)
-				&& ( reverseWave1.getLayoutX()>0 || reverseWave2.getLayoutX()>0 || reverseWave3.getLayoutX()>0)) {
+		if((boy.getLayoutY()==neutralWave1.getLayoutY() && neutralWave1.getLayoutX()>0 && neutralWave1.getLayoutX()<201) ||
+			(boy.getLayoutY()==neutralWave2.getLayoutY() && neutralWave2.getLayoutX()>0 && neutralWave2.getLayoutX()<201) ||
+			(boy.getLayoutY()==neutralWave3.getLayoutY() && neutralWave3.getLayoutX()>0 && neutralWave3.getLayoutX()<201)) {
 			neutralPixel--;
-			if(neutralPixel==0)
+			if(neutralPixel<=0)
 			{
 			gameTimer.stop();
 			DeathViewManager  deathManager = new DeathViewManager();
-			deathManager.deathScene(gameStage,points,menuStage,"Neautral");}
+			deathManager.deathScene(gameStage,points,menuStage,"Neautral");
+			}
 		}
-	  }
+	 }
 		
 	
 	
@@ -292,7 +293,7 @@ public class GameViewManager {
 		forwave3.get(0).setLayoutX(forwave3.get(0).getLayoutX()-speed);
 		forwave3.get(1).setLayoutX(forwave3.get(1).getLayoutX()-speed);
 		forwave3.get(2).setLayoutX(forwave3.get(2).getLayoutX()-speed);
-		points = points + 4;
+		points = points + speed;
 		pointsLabel.setText("POINTS : "+ points);
 		lifeLabel.setText("Life : "+ neutralPixel );
 		

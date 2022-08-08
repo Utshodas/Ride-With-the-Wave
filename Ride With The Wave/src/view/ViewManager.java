@@ -4,9 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.Element;
+import javafx.scene.image.ImageView;
+
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
@@ -43,6 +47,8 @@ public class ViewManager {
 	private WaveSubScene levelSubScene;
 	private WaveSubScene sceneToHide;
 	
+	Image logo;
+	
 	public ViewManager()
 	{
 		mainPane = new AnchorPane();
@@ -57,6 +63,7 @@ public class ViewManager {
 		createExitMenuButton();
 		createSubScenes();
 		createBackground();
+		createLogo();
 		
 	}
 	
@@ -106,7 +113,7 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent event) {
 				GameViewManager.speed=2;
-				GameViewManager.neutralPixel=500;
+				GameViewManager.neutralPixel=2000;
 			}	
         });
 		WaveButton normalButton = new WaveButton("NORMAL");
@@ -117,7 +124,7 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent event) {
 				GameViewManager.speed=4;
-				GameViewManager.neutralPixel=300;
+				GameViewManager.neutralPixel=1000;
 			}	
         });
 		WaveButton hardButton = new WaveButton("HARD");
@@ -128,7 +135,7 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent event) {
 				GameViewManager.speed=10;
-				GameViewManager.neutralPixel=100;
+				GameViewManager.neutralPixel=500;
 			}	
         });
 		levelSubScene.getPane().getChildren().add(easyButton);
@@ -246,5 +253,14 @@ public class ViewManager {
 			}
         	
         });
+	}
+	private void createLogo()
+	{
+		Image logoImage = new Image(getClass().getResourceAsStream("logo4.png"));
+		ImageView logo = new ImageView(logoImage);
+		logo.setLayoutX(400);
+		logo.setLayoutY(50);
+		
+		mainPane.getChildren().add(logo);
 	}
 }
