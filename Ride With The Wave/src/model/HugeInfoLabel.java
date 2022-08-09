@@ -20,20 +20,20 @@ public class HugeInfoLabel extends Label {
 	
 	public HugeInfoLabel( String text)
 	{
-		setText(text);
-        setLabelFont();
-		setPrefHeight(400);
-		setPrefWidth(400);
-		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("yellow_panel.png").toExternalForm(),400,400,false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
+		setPrefHeight(45);
+		setPrefWidth(270);
+		BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("blue_panel1.jpg").toExternalForm(),130,20,false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
         setBackground(new Background(backgroundImage));
-        setAlignment(Pos.CENTER_LEFT);
-        setPadding(new Insets(20,20,20,20));
+        setAlignment(Pos.CENTER);
+        //setPadding(new Insets(2,2,2,2));
+        setText(text);
+        setLabelFont();
+        
 	}
 	
-	private void setLabelFont()
-	{
+	private void setLabelFont() {
 		try {
-			setFont(Font.loadFont( new FileInputStream(FONT_PATH), 30));
+			setFont(Font.loadFont( new FileInputStream(new File(FONT_PATH)),70));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			setFont(Font.font("AvantGarde",23));

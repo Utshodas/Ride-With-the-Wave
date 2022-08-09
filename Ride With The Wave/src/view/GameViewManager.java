@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -66,9 +68,13 @@ public class GameViewManager {
 		forwave2 =new ArrayList<>();
 		forwave3 =new ArrayList<>();
 		createKeyListners();
-		
-		
 	}
+	public static void difficulty(int fast,int neutral )
+	{
+		speed=fast;
+		neutralPixel=neutral;
+	}
+	
 
 	private void createKeyListners() {
 		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -129,7 +135,7 @@ public class GameViewManager {
 	
 	private void createBoy() {
 		boy = new ImageView(new Image(getClass().getResourceAsStream("surfer_boy2.png")));
-		boy.setLayoutX(10);
+		boy.setLayoutX(0);
 		boy.setLayoutY(0);
 		gamePane.getChildren().add(boy);
 		}
@@ -142,7 +148,7 @@ public class GameViewManager {
 			public void handle(long arg0) {
 				// TODO Auto-generated method stub
 				moveBackground();
-				//deathLogicReverse();
+				deathLogicReverse();
 				deathLogicNeautral();
 				moveBoy();
 			}
@@ -152,25 +158,25 @@ public class GameViewManager {
 	
   private void deathLogicReverse() {
 	
-	  if((boy.getLayoutY()==reverseWave1.getLayoutY() && reverseWave1.getLayoutX()>0 && neutralWave1.getLayoutX()<201) ||
-		(boy.getLayoutY()==reverseWave2.getLayoutY() && reverseWave2.getLayoutX()>0 && reverseWave2.getLayoutX()<201) ||
-		(boy.getLayoutY()==reverseWave3.getLayoutY() && reverseWave3.getLayoutX()>0 && reverseWave3.getLayoutX()<201)) {
-		gameTimer.stop();
+	  if((boy.getLayoutY()==reverseWave1.getLayoutY() && reverseWave1.getLayoutX()<202 && reverseWave1.getLayoutX()>-536) ||
+				(boy.getLayoutY()==reverseWave2.getLayoutY() &&  reverseWave2.getLayoutX()<202 && reverseWave2.getLayoutX()>-536) ||
+				(boy.getLayoutY()==reverseWave3.getLayoutY() &&  reverseWave3.getLayoutX()<202 && reverseWave3.getLayoutX()>-536)) {
+		 gameTimer.stop();
 		DeathViewManager  deathManager = new DeathViewManager();
-		deathManager.deathScene(gameStage,points,menuStage,"reverse");
+		deathManager.deathScene(gameStage,points,menuStage,"REVERSE WAVE",speed);
 	}
   }
   private void deathLogicNeautral() {
 		
-		if((boy.getLayoutY()==neutralWave1.getLayoutY() && neutralWave1.getLayoutX()>0 && neutralWave1.getLayoutX()<201) ||
-			(boy.getLayoutY()==neutralWave2.getLayoutY() && neutralWave2.getLayoutX()>0 && neutralWave2.getLayoutX()<201) ||
-			(boy.getLayoutY()==neutralWave3.getLayoutY() && neutralWave3.getLayoutX()>0 && neutralWave3.getLayoutX()<201)) {
+		if((boy.getLayoutY()==neutralWave1.getLayoutY() && neutralWave1.getLayoutX()<202 && neutralWave1.getLayoutX()>-536) ||
+			(boy.getLayoutY()==neutralWave2.getLayoutY() &&  neutralWave2.getLayoutX()<202 && neutralWave2.getLayoutX()>-536) ||
+			(boy.getLayoutY()==neutralWave3.getLayoutY() &&  neutralWave3.getLayoutX()<202 && neutralWave3.getLayoutX()>-536)) {
 			neutralPixel--;
 			if(neutralPixel<=0)
 			{
 			gameTimer.stop();
 			DeathViewManager  deathManager = new DeathViewManager();
-			deathManager.deathScene(gameStage,points,menuStage,"Neautral");
+			deathManager.deathScene(gameStage,points,menuStage,"NO LIFE",speed);
 			}
 		}
 	 }
@@ -195,7 +201,7 @@ public class GameViewManager {
 			}
 			isUpKeyPressed=false;
 		}
-		if(isRightKeyPressed && !isLeftKeyPressed)
+		/*if(isRightKeyPressed && !isLeftKeyPressed)
 		{
 			if(boy.getLayoutX()<201) {
 				boy.setLayoutX(boy.getLayoutX()+20);
@@ -211,20 +217,20 @@ public class GameViewManager {
 				neutralPixel=0;
 			}
 			isLeftKeyPressed=false;
-		}
+		}*/
 		
 	}
 	
 	private void addBackgounds() {
 		forwardWave1 = new ImageView(new Image(getClass().getResourceAsStream("forward_wave1.png")));
 		reverseWave1 = new ImageView(new Image(getClass().getResourceAsStream("reverse_wave1.png")));
-		neutralWave1 = new ImageView(new Image(getClass().getResourceAsStream("neutral_wave1.png")));
+		neutralWave1 = new ImageView(new Image(getClass().getResourceAsStream("neutral_wave2.png")));
 		forwardWave2= new ImageView(new Image(getClass().getResourceAsStream("forward_wave1.png")));
 		reverseWave2= new ImageView(new Image(getClass().getResourceAsStream("reverse_wave1.png")));
-		neutralWave2= new ImageView(new Image(getClass().getResourceAsStream("neutral_wave1.png")));
+		neutralWave2= new ImageView(new Image(getClass().getResourceAsStream("neutral_wave2.png")));
 		forwardWave3= new ImageView(new Image(getClass().getResourceAsStream("forward_wave1.png")));
 		reverseWave3= new ImageView(new Image(getClass().getResourceAsStream("reverse_wave1.png")));
-		neutralWave3= new ImageView(new Image(getClass().getResourceAsStream("neutral_wave1.png")));
+		neutralWave3= new ImageView(new Image(getClass().getResourceAsStream("neutral_wave2.png")));
 		gamePane.getChildren().add(forwardWave1);
 		gamePane.getChildren().add(neutralWave1);
 		gamePane.getChildren().add(reverseWave1);
@@ -295,7 +301,7 @@ public class GameViewManager {
 		forwave3.get(2).setLayoutX(forwave3.get(2).getLayoutX()-speed);
 		points = points + speed;
 		pointsLabel.setText("POINTS : "+ points);
-		lifeLabel.setText("Life : "+ neutralPixel );
+		lifeLabel.setText("Life : "+ neutralPixel);
 		
 		if(forwave1.get(0).getLayoutX()<-536) {
 			setPositionLater(forwave1);	

@@ -17,7 +17,7 @@ public class WaveSubScene extends SubScene {
 		super( new AnchorPane(),400,400);
 		prefHeight(400);
 		prefWidth(400);
-		Image backgroundImage = new Image(getClass().getResource("yellow_panel.png").toExternalForm(), 256, 256, false, true);
+		Image backgroundImage = new Image(getClass().getResource("grey_panel.jpg").toExternalForm(), 256, 256, false, true);
 		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
 		
 		AnchorPane root2 = (AnchorPane) this.getRoot();

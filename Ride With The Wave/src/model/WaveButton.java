@@ -1,7 +1,12 @@
 package model;
 
+
+
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -16,6 +21,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.text.Font;
 
 public class WaveButton extends Button {
+	
 	
 	private final String FONT_PATH = "src/model/resources/kenney_pixel.ttf";
 	
